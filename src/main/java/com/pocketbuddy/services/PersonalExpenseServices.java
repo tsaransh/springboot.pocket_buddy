@@ -65,21 +65,44 @@ public class PersonalExpenseServices implements PersonalServices {
 
     @Override
     public Double getTotalExpenseSum(String userUid) {
-        return 0.0;
+          double amount = repository.getTotalExpense(userUid);
+        return amount != 0 ? amount : 0.00;
     }
 
     @Override
-    public List<PersonalExpense> getUserStatementBetweenData(PersonalExpenseStatement personalExpenseStatement) {
-        return List.of();
+    public List<Optional<PersonalExpense>> getUserStatementBetweenData(PersonalExpenseStatement personalExpenseStatement) {
+        if(personalExpenseStatement == null ||personalExpenseStatement.userUid.isEmpty()
+                || personalExpenseStatement.startDate == null
+                || personalExpenseStatement.endDate == null) {
+            throw new ApiException("user_uid and date can't be empty and null");
+        }
+        return repository.getUserStatementBetweenData(
+                personalExpenseStatement.userUid,
+                personalExpenseStatement.startDate,
+                personalExpenseStatement.endDate
+                );
     }
 
     @Override
     public Double getTotalExpenseSumBetweenData(PersonalExpenseStatement personalExpenseStatement) {
-        return 0.0;
+        if(personalExpenseStatement == null ||personalExpenseStatement.userUid.isEmpty()
+                || personalExpenseStatement.startDate == null
+                || personalExpenseStatement.endDate == null) {
+            throw new ApiException("user_uid and date can't be empty and null");
+        }
+        return repository.getTotalExpenseSumBetweenData(
+                personalExpenseStatement.userUid,
+                personalExpenseStatement.startDate,
+                personalExpenseStatement.endDate
+        );
     }
 
     @Override
     public boolean delete(String id) {
-        return false;
+        PersonalExpense expense = repository.findById(id).orElseThrow();
+        repository.delete(expense);
+
+        return !repository.existsById(id);
+        // return true that mean the data was deleted if false data is not return
     }
 }

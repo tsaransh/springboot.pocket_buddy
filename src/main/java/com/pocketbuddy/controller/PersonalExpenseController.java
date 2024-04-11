@@ -31,23 +31,23 @@ public class PersonalExpenseController {
 
     @PostMapping("/update")
     public ResponseEntity<?> updateExpense(@RequestBody PersonalExpenseDTO personalExpenseDTO) {
-        return null;
+        return new ResponseEntity<>(services.update(personalExpenseDTO), HttpStatus.OK);
     }
 
     @GetMapping("/alltimestatement")
     public ResponseEntity<?> getUserStatements(@RequestParam String userUid) {
         List<Optional<PersonalExpense>> expenseList = services.getUserStatements(userUid);
-        return new ResponseEntity<>(expenseList, HttpStatus.FOUND);
+        return  ResponseEntity.ok(expenseList);
     }
 
     @GetMapping("/alltimetotal")
     public ResponseEntity<?> getTotalExpenseSum(@RequestParam String userUid) {
-        return null;
+        return ResponseEntity.ok(services.getTotalExpenseSum(userUid));
     }
 
     @GetMapping("/statement")
-    public void getUserStatementBetweenData(@RequestBody PersonalExpenseStatement personalExpenseStatement) {
-
+    public ResponseEntity<List<Optional<PersonalExpense>>> getUserStatementBetweenData(@RequestBody PersonalExpenseStatement personalExpenseStatement) {
+        return ResponseEntity.ok(services.getUserStatementBetweenData(personalExpenseStatement));
     }
 
     @GetMapping("/total")
@@ -56,8 +56,8 @@ public class PersonalExpenseController {
     }
 
     @DeleteMapping("/delete")
-    public void deleteExpense() {
-
+    public ResponseEntity<Boolean> deleteExpense(@RequestParam String id) {
+        return ResponseEntity.ok(services.delete(id));
     }
 
 }
