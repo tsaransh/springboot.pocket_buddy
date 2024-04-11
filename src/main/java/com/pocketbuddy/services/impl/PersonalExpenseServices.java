@@ -1,10 +1,11 @@
-package com.pocketbuddy.services;
+package com.pocketbuddy.services.impl;
 
 import com.pocketbuddy.exception.ApiException;
 import com.pocketbuddy.payload.PersonalExpenseDTO;
 import com.pocketbuddy.payload.PersonalExpenseStatement;
 import com.pocketbuddy.entity.PersonalExpense;
 import com.pocketbuddy.repository.PersonalRepository;
+import com.pocketbuddy.services.PersonalServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
