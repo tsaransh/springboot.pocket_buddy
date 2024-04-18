@@ -36,26 +36,29 @@ public class PersonalExpenseController {
 
     @GetMapping("/alltimestatement")
     public ResponseEntity<?> getUserStatements(@RequestParam String userUid) {
-        System.out.println("alltimestatement");
         List<Optional<PersonalExpense>> expenseList = services.getUserStatements(userUid);
-        return  ResponseEntity.ok(expenseList);
+        if(!expenseList.isEmpty())
+            return  ResponseEntity.ok(expenseList);
+        else
+            return ResponseEntity.ok(List.of());
     }
 
     @GetMapping("/alltimetotal")
     public ResponseEntity<?> getTotalExpenseSum(@RequestParam String userUid) {
-        System.out.println("alltimetotal");
-        return ResponseEntity.ok(services.getTotalExpenseSum(userUid));
+        double result = services.getTotalExpenseSum(userUid);
+       return result !=0.00 ? ResponseEntity.ok(result) : ResponseEntity.ok(0.00);
     }
 
     @PostMapping("/statement")
     public ResponseEntity<List<Optional<PersonalExpense>>> getUserStatementBetweenData(@RequestBody ExpenseStatement personalExpenseStatement) {
-        return ResponseEntity.ok(services.getUserStatementBetweenData(personalExpenseStatement));
+        List<Optional<PersonalExpense>> expenseList = services.getUserStatementBetweenData(personalExpenseStatement);
+        return !expenseList.isEmpty() ? ResponseEntity.ok(expenseList) : ResponseEntity.ok(List.of());
     }
 
     @PostMapping("/total")
     public ResponseEntity<?> getTotalExpenseSumBetweenData(@RequestBody ExpenseStatement personalExpenseStatement) {
-        System.out.println("total");
-        return ResponseEntity.ok(services.getTotalExpenseSumBetweenData(personalExpenseStatement));
+        double result = services.getTotalExpenseSumBetweenData(personalExpenseStatement);
+        return result !=0.00 ? ResponseEntity.ok(result) : ResponseEntity.ok(0.00);
     }
 
     @DeleteMapping("/delete")
