@@ -7,7 +7,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 @CrossOrigin
-public class CrossConfiguration implements WebMvcConfigurer {
+public class ApplicationConfiguration implements WebMvcConfigurer {
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
@@ -16,5 +16,7 @@ public class CrossConfiguration implements WebMvcConfigurer {
                 .allowedMethods("GET", "POST", "PUT", "DELETE") // Allow specified HTTP methods
                 .allowedHeaders("*"); // Allow all headers
     }
+
+
 
 }
