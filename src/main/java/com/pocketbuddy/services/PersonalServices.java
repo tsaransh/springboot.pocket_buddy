@@ -1,7 +1,7 @@
 package com.pocketbuddy.services;
 
 import com.pocketbuddy.payload.PersonalExpenseDTO;
-import com.pocketbuddy.payload.PersonalExpenseStatement;
+import com.pocketbuddy.payload.ExpenseStatement;
 import com.pocketbuddy.entity.PersonalExpense;
 
 import java.util.List;
@@ -13,8 +13,8 @@ public interface PersonalServices {
     public PersonalExpense update(PersonalExpenseDTO personalExpenseDTO);
     public List<Optional<PersonalExpense>> getUserStatements(String userUid);
     public Double getTotalExpenseSum(String userUid);
-    public List<Optional<PersonalExpense>> getUserStatementBetweenData(PersonalExpenseStatement personalExpenseStatement);
-    public Double getTotalExpenseSumBetweenData(PersonalExpenseStatement personalExpenseStatement);
+    public List<Optional<PersonalExpense>> getUserStatementBetweenData(ExpenseStatement personalExpenseStatement);
+    public Double getTotalExpenseSumBetweenData(ExpenseStatement personalExpenseStatement);
     public boolean delete(String id);
 
 }

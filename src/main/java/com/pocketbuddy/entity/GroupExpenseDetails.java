@@ -3,12 +3,14 @@ package com.pocketbuddy.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.util.Date;
 
 @Data
 @Entity
 @Table(name = "group_expense_details")
+@EntityListeners(AuditingEntityListener.class)
 public class GroupExpenseDetails {
 
     @Id
@@ -29,7 +31,7 @@ public class GroupExpenseDetails {
     public Date dateOfExpense;
 
     @Column(name="user_uid")
-    public String user_uid;
+    public String userUid;
 
     @Column(name="group_id")
     public String groupId;

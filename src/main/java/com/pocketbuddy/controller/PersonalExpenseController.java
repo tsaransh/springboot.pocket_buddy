@@ -3,7 +3,7 @@ package com.pocketbuddy.controller;
 
 import com.pocketbuddy.entity.PersonalExpense;
 import com.pocketbuddy.payload.PersonalExpenseDTO;
-import com.pocketbuddy.payload.PersonalExpenseStatement;
+import com.pocketbuddy.payload.ExpenseStatement;
 import com.pocketbuddy.services.PersonalServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -36,23 +36,26 @@ public class PersonalExpenseController {
 
     @GetMapping("/alltimestatement")
     public ResponseEntity<?> getUserStatements(@RequestParam String userUid) {
+        System.out.println("alltimestatement");
         List<Optional<PersonalExpense>> expenseList = services.getUserStatements(userUid);
         return  ResponseEntity.ok(expenseList);
     }
 
     @GetMapping("/alltimetotal")
     public ResponseEntity<?> getTotalExpenseSum(@RequestParam String userUid) {
+        System.out.println("alltimetotal");
         return ResponseEntity.ok(services.getTotalExpenseSum(userUid));
     }
 
-    @GetMapping("/statement")
-    public ResponseEntity<List<Optional<PersonalExpense>>> getUserStatementBetweenData(@RequestBody PersonalExpenseStatement personalExpenseStatement) {
+    @PostMapping("/statement")
+    public ResponseEntity<List<Optional<PersonalExpense>>> getUserStatementBetweenData(@RequestBody ExpenseStatement personalExpenseStatement) {
         return ResponseEntity.ok(services.getUserStatementBetweenData(personalExpenseStatement));
     }
 
-    @GetMapping("/total")
-    public void getTotalExpenseSumBetweenData(@RequestBody PersonalExpenseStatement personalExpenseStatement) {
-
+    @PostMapping("/total")
+    public ResponseEntity<?> getTotalExpenseSumBetweenData(@RequestBody ExpenseStatement personalExpenseStatement) {
+        System.out.println("total");
+        return ResponseEntity.ok(services.getTotalExpenseSumBetweenData(personalExpenseStatement));
     }
 
     @DeleteMapping("/delete")

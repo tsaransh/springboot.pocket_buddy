@@ -1,5 +1,6 @@
 package com.pocketbuddy.controller;
 
+import com.pocketbuddy.entity.GroupDetails;
 import com.pocketbuddy.services.GroupServices;
 import com.pocketbuddy.services.UserJoinGroupDetailsServices;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,28 @@ public class GroupExpenseController {
         return ResponseEntity.ok(joinGroupDetailsServices.join(groupId,userUid));
     }
 
-    // delete get leave
+    @DeleteMapping("/delete")
+    public ResponseEntity<?> delete(@RequestParam String groupId, @RequestParam String userUid) {
+        groupServices.deleteGroup(groupId, userUid);
+        GroupDetails details = groupServices.getGroup(groupId);
+        return details != null ? ResponseEntity.ok(true) : new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
+    }
+
+    @GetMapping("/get")
+    public ResponseEntity<?> getGroupDetails(@RequestParam String groupId) {
+        return ResponseEntity.ok(groupServices.getGroup(groupId));
+    }
+
+    @DeleteMapping("/leave")
+    public ResponseEntity<?> leaveGroup(@RequestParam String groupId, @RequestParam String userUid) {
+        joinGroupDetailsServices.leaveGroup(groupId, userUid);
+        return ResponseEntity.ok(true);
+    }
+
+    // how join who(s) groups
+    @GetMapping("/getMembers")
+    public ResponseEntity<?> getMembers(@RequestParam String groupId) {
+        return ResponseEntity.ok(joinGroupDetailsServices.getGroupMembers(groupId));
+    }
 
 }

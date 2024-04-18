@@ -3,6 +3,7 @@ package com.pocketbuddy.services.impl;
 import com.pocketbuddy.entity.GroupDetails;
 import com.pocketbuddy.payload.GroupDetailsReturn;
 import com.pocketbuddy.repository.GroupRepository;
+import com.pocketbuddy.services.GroupExpenseDetailsServices;
 import com.pocketbuddy.services.GroupServices;
 import com.pocketbuddy.services.UserJoinGroupDetailsServices;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,11 +17,13 @@ public class GroupExpenseServices implements GroupServices {
 
     private final GroupRepository group;
     private final UserJoinGroupDetailsServices joinGroupDetailsServices;
+    private final GroupExpenseDetailsServices detailsServices;
 
     @Autowired
-    public GroupExpenseServices(GroupRepository group, UserJoinGroupDetailsServices joinGroupDetailsServices) {
+    public GroupExpenseServices(GroupRepository group, UserJoinGroupDetailsServices joinGroupDetailsServices, GroupExpenseDetailsServices detailsServices) {
         this.group = group;
         this.joinGroupDetailsServices = joinGroupDetailsServices;
+        this.detailsServices = detailsServices;
     }
 
 
@@ -44,10 +47,14 @@ public class GroupExpenseServices implements GroupServices {
     }
 
     @Override
-    public void deleteGroup(String groupId) {
+    public void deleteGroup(String groupId, String userUid) {
         // delete data from all three table
-        group.deleteById(groupId);
-        joinGroupDetailsServices.deleteGroup(groupId);
+        GroupDetails groupDetails = group.findById(groupId).orElseThrow();
+        if(groupDetails.userUid.compareTo(userUid) == 0) {
+            group.deleteById(groupId);
+            joinGroupDetailsServices.deleteGroup(groupId);
+            detailsServices.deleteGroup(groupId);
+        }
     }
 
     @Override

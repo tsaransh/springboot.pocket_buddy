@@ -1,12 +1,10 @@
 package com.pocketbuddy.payload;
 
-import lombok.Data;
-
 import java.util.Date;
 
-public class PersonalExpenseStatement {
+public class ExpenseStatement {
 
-    public String userUid;
+    public String id;
     public Date startDate;
     public Date endDate;
 

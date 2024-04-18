@@ -2,7 +2,7 @@ package com.pocketbuddy.services.impl;
 
 import com.pocketbuddy.exception.ApiException;
 import com.pocketbuddy.payload.PersonalExpenseDTO;
-import com.pocketbuddy.payload.PersonalExpenseStatement;
+import com.pocketbuddy.payload.ExpenseStatement;
 import com.pocketbuddy.entity.PersonalExpense;
 import com.pocketbuddy.repository.PersonalRepository;
 import com.pocketbuddy.services.PersonalServices;
@@ -71,28 +71,28 @@ public class PersonalExpenseServices implements PersonalServices {
     }
 
     @Override
-    public List<Optional<PersonalExpense>> getUserStatementBetweenData(PersonalExpenseStatement personalExpenseStatement) {
-        if(personalExpenseStatement == null ||personalExpenseStatement.userUid.isEmpty()
+    public List<Optional<PersonalExpense>> getUserStatementBetweenData(ExpenseStatement personalExpenseStatement) {
+        if(personalExpenseStatement == null ||personalExpenseStatement.id.isEmpty()
                 || personalExpenseStatement.startDate == null
                 || personalExpenseStatement.endDate == null) {
             throw new ApiException("user_uid and date can't be empty and null");
         }
         return repository.getUserStatementBetweenData(
-                personalExpenseStatement.userUid,
+                personalExpenseStatement.id,
                 personalExpenseStatement.startDate,
                 personalExpenseStatement.endDate
                 );
     }
 
     @Override
-    public Double getTotalExpenseSumBetweenData(PersonalExpenseStatement personalExpenseStatement) {
-        if(personalExpenseStatement == null ||personalExpenseStatement.userUid.isEmpty()
+    public Double getTotalExpenseSumBetweenData(ExpenseStatement personalExpenseStatement) {
+        if(personalExpenseStatement == null ||personalExpenseStatement.id.isEmpty()
                 || personalExpenseStatement.startDate == null
                 || personalExpenseStatement.endDate == null) {
             throw new ApiException("user_uid and date can't be empty and null");
         }
         return repository.getTotalExpenseSumBetweenData(
-                personalExpenseStatement.userUid,
+                personalExpenseStatement.id,
                 personalExpenseStatement.startDate,
                 personalExpenseStatement.endDate
         );

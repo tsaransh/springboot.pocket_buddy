@@ -1,6 +1,6 @@
 package com.pocketbuddy.payload;
 
-public class GroupExpenseDetailsInput {
+public class GroupExpense {
 
     public String expenseId;
     public String expenseTitle;
