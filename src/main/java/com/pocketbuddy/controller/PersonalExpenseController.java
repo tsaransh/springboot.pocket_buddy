@@ -49,7 +49,7 @@ public class PersonalExpenseController {
        return result !=0.00 ? ResponseEntity.ok(result) : ResponseEntity.ok(0.00);
     }
 
-    @PostMapping("/statement")
+    @PostMapping("/statements")
     public ResponseEntity<List<Optional<PersonalExpense>>> getUserStatementBetweenData(@RequestBody ExpenseStatement personalExpenseStatement) {
         List<Optional<PersonalExpense>> expenseList = services.getUserStatementBetweenData(personalExpenseStatement);
         return !expenseList.isEmpty() ? ResponseEntity.ok(expenseList) : ResponseEntity.ok(List.of());
@@ -65,5 +65,12 @@ public class PersonalExpenseController {
     public ResponseEntity<Boolean> deleteExpense(@RequestParam String id) {
         return ResponseEntity.ok(services.delete(id));
     }
+
+    @GetMapping("/statement/details")
+    public ResponseEntity<?> getStatementDetails(@RequestParam String expenseId) {
+        PersonalExpense expense = services.getExpenseDetails(expenseId);
+        return expense != null ? ResponseEntity.ok(expense) : ResponseEntity.ok(null);
+    }
+
 
 }

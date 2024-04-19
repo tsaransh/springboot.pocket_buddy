@@ -41,7 +41,14 @@ public class GroupExpenseController {
 
     @GetMapping("/get")
     public ResponseEntity<?> getGroupDetails(@RequestParam String groupId) {
+        GroupDetails groupDetails = groupServices.getGroup(groupId);
+
         return ResponseEntity.ok(groupServices.getGroup(groupId));
+    }
+
+    @GetMapping("/getjoingroupbyuser")
+    public ResponseEntity<?> getJoinGroupByUser(@RequestParam String userUid) {
+        return null;
     }
 
     @DeleteMapping("/leave")

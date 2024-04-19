@@ -17,4 +17,5 @@ public interface PersonalServices {
     public Double getTotalExpenseSumBetweenData(ExpenseStatement personalExpenseStatement);
     public boolean delete(String id);
 
+    PersonalExpense getExpenseDetails(String expenseId);
 }

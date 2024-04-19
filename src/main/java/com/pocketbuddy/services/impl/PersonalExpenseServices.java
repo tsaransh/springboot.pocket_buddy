@@ -106,4 +106,9 @@ public class PersonalExpenseServices implements PersonalServices {
         return !repository.existsById(id);
         // return true that mean the data was deleted if false data is not return
     }
+
+    @Override
+    public PersonalExpense getExpenseDetails(String expenseId) {
+        return repository.findById(expenseId).orElseThrow();
+    }
 }
